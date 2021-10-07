@@ -1,14 +1,9 @@
 import React from 'react';
 import { Line } from "react-chartjs-2";
 import drawLineTooltip from './LineCanvas';
+import externalTooltipHandler from './ExternalTooltip';
 
 const LineChart = () => {
-	const body = (tooltipItems) => {
-		console.log("tooltipItems");
-		let body = (data.datasets[1].data[tooltipItems[1].dataIndex] -  data.datasets[0].data[tooltipItems[0].dataIndex]).toString();
-		return body;
-	};
-
 	const data = {
     labels: ['1', '2', '3', '4', '5', '6'],
   	datasets: [
@@ -49,14 +44,10 @@ const LineChart = () => {
 	
 		plugins: {
 			tooltip: {
-				// enabled: false,
+				enabled: false,
+				external: externalTooltipHandler,
 				mode: 'index',
 				intersect: false,
-				displayColors: true,
-				bodyFont: {
-					size: 20
-				},
-				padding: 20,
 				callbacks: {
 					title: function () {
 						return 'Gap';
@@ -64,7 +55,6 @@ const LineChart = () => {
 					label: function () {
 						return '';
 					},
-					afterBody: body,
 				}
 			},
 		},
