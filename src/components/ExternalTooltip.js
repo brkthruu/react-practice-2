@@ -34,7 +34,7 @@ const  ExternalTooltipHandler = (context) => {
   }
 
   // Set Text
-  if (tooltip.dataPoints) {
+  if (tooltip.dataPoints.length == 2) {
     const titleLines = tooltip.title || [];
 
     const tableHead = document.createElement('thead');
@@ -85,6 +85,9 @@ const  ExternalTooltipHandler = (context) => {
     // Add new children
     tableRoot.appendChild(tableHead);
     tableRoot.appendChild(tableBody);
+  } else {
+    tooltipEl.style.opacity = 0;
+    return;
   }
 
   const {offsetLeft: positionX, offsetTop: positionY} = chart.canvas;
