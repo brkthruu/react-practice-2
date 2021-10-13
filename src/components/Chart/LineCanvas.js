@@ -3,14 +3,22 @@ import { getRelativePosition } from 'chart.js/helpers';
 function drawLineTooltip (chart) {
   if (chart.chartArea) {
 		const {ctx, chartArea: {top, right, bottom, left}} = chart;
-    // console.log(chart.tooltip);
-    // console.log(chart.tooltip);
-    const computeGap = function () {
-      // const gap = chart.tootltip()
-      // return Number;
+    if (chart.tooltip._active && chart.tooltip._active.length) {
+      const activePoint = chart.tooltip._active[0];
+      const { x } = activePoint.element;
+      const topY = activePoint.element.cp2y > activePoint.element.cp1y ? activePoint.element.cp2y : activePoint.element.cp1y;
+      const bottomY = chart.scales.yAxes.bottom;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.setLineDash([5, 3]);
+      ctx.moveTo(x, topY);
+      ctx.lineTo(x, bottomY);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#e23fa9';
+      ctx.stroke();
+      ctx.restore();
     }
-    // var eventPosition = getRelativePosition(e, chart);
-    // console.log(eventPosition);
 	}
 } 
 export default drawLineTooltip;

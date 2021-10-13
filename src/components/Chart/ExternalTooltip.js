@@ -34,7 +34,7 @@ const  ExternalTooltipHandler = (context) => {
   }
 
   // Set Text
-  if (tooltip.dataPoints.length == 2) {
+  if (tooltip.dataPoints.length === 2) {
     const titleLines = tooltip.title || [];
 
     const tableHead = document.createElement('thead');

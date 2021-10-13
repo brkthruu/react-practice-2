@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from "react-chartjs-2";
 import drawLineTooltip from './LineCanvas';
 import externalTooltipHandler from './ExternalTooltip';
+import axios from 'axios';
 
 const LineChart = () => {
+	const [labels, setLabels] = useState([]);
+	const [realData, setRealData] = useState([]);
+	const [simulData, setSimulData] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await axios.get(process.env.REACT_APP_SERVER_ADDRESS_IP + '/simulation/rack');
+				setLabels(Array.from(response.data[0].real, x => x.time));
+				setRealData(Array.from(response.data[0].real, y => y.value));
+				setSimulData(Array.from(response.data[0].simulation, y => y.value));
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		fetchData();
+	}, []);
+
 	const data = {
-    labels: ['1', '2', '3', '4', '5', '6'],
+    labels: labels,
   	datasets: [
     	{
 				label: 'realworld',
-				data: [12, 19, 3, 5, 2, 3],
+				data: realData,
 				fill: false,
 				backgroundColor: 'rgb(255, 99, 132)',
 				borderColor: 'rgba(255, 99, 132, 0.2)',
@@ -17,7 +36,7 @@ const LineChart = () => {
 			},
 			{
 				label: 'simulation',
-				data: [40, 10, 3, 15, 20, 9],
+				data: simulData,
 				fill: false,
 				backgroundColor: 'rgb(0, 99, 132)',
 				borderColor: 'rgba(0,80, 132, 0.2)',				
