@@ -31,7 +31,7 @@ const LineChart = () => {
 				data: realData,
 				fill: false,
 				backgroundColor: 'rgb(255, 99, 132)',
-				borderColor: 'rgba(255, 99, 132, 0.2)',
+				borderColor: 'rgba(255, 99, 132)',
 				tension: 0.2,
 			},
 			{
@@ -39,7 +39,7 @@ const LineChart = () => {
 				data: simulData,
 				fill: false,
 				backgroundColor: 'rgb(0, 99, 132)',
-				borderColor: 'rgba(0,80, 132, 0.2)',				
+				borderColor: 'rgba(0,99, 132)',				
 				tension: 0.2,
 			}
 		],
@@ -52,13 +52,13 @@ const LineChart = () => {
 
 	const options = {
 		scales: {
-			yAxes: [
-				{
-					ticks: {
-						beginAtZero: true,
-					},
-				},
-			],
+      yAxes: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+        stepSize: 20,
+        },
+      },      
 		},
 	
 		plugins: {
